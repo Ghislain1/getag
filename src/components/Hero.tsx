@@ -25,9 +25,9 @@ export default function Hero() {
     <section id="hero" className="relative z-[1] flex min-h-screen items-center overflow-hidden px-[5%] pt-[calc(var(--nav-h)+4rem)] pb-20">
       <div className="mx-auto grid w-full max-w-[1200px] grid-cols-1 items-center gap-12 md:grid-cols-2">
         <div>
-          <div className="hero-eyebrow mb-6">Premium Friseursalon</div>
+          <div className="hero-eyebrow mb-6">Getag Friseursalon</div>
           <h1 className="font-serif text-[clamp(3rem,6vw,5.5rem)] font-light leading-[1.05] tracking-[-0.01em] text-ink mb-6">
-            Haarkunst,<br /><em className="not-italic text-red-600">neu definiert.</em>
+            Ihr mobiler Friseur,<br /><em className="not-italic text-red-600">in Mainz und Umgebung.</em>
           </h1>
           <p className="mb-10 max-w-[420px] text-base leading-[1.7]" style={{ color: 'var(--text2)' }}>
             Präzision trifft Stil. Bei GeTag erleben Sie hochwertige Friseurkunst im Salon oder bequem bei Ihnen zuhause – auf Anfrage.

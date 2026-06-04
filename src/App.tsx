@@ -9,6 +9,8 @@ import Gallery from './components/Gallery';
 import Footer from './components/Footer';
 import FloatingActions from './components/FloatingActions';
 import { useTheme } from './hooks/useTheme';
+import { EmberParticles } from './components/EmberParticles';
+import { AnnouncementBar } from './components/AnnouncementBar';
 
 export default function App() {
   const { isDark, toggle } = useTheme();
@@ -18,8 +20,10 @@ export default function App() {
       <CustomCursor />
       <GradientBg />
       <Navbar isDark={isDark} onToggleTheme={toggle} />
+      <AnnouncementBar />
       <main>
         <Hero />
+        <EmberParticles />
         <div className="divider" />
         <Stats />
         <Services />
