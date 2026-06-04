@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOIR Salon — Premium Friseur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #181818;
+    --glass: rgba(255,255,255,0.04);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-hover: rgba(255,255,255,0.08);
+    --text: #f0ece4;
+    --text2: rgba(240,236,228,0.55);
+    --text3: rgba(240,236,228,0.3);
+    --accent: #c9a96e;
+    --accent2: #e8d5b0;
+    --accent-glow: rgba(201,169,110,0.15);
+    --red: #c9826e;
+    --nav-h: 72px;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+  [data-theme="light"] {
+    --bg: #f5f2ed;
+    --bg2: #ede9e2;
+    --bg3: #e5e1d8;
+    --glass: rgba(255,255,255,0.6);
+    --glass-border: rgba(0,0,0,0.08);
+    --glass-hover: rgba(255,255,255,0.8);
+    --text: #1a1714;
+    --text2: rgba(26,23,20,0.55);
+    --text3: rgba(26,23,20,0.3);
+    --accent: #8b6930;
+    --accent2: #5c4520;
+    --accent-glow: rgba(139,105,48,0.12);
+    --red: #8b4030;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    transition: background 0.4s, color 0.4s;
+  }
+
+  /* ── Animated gradient bg ── */
+  .gradient-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: var(--bg);
+  }
+  .gradient-bg::before {
+    content: '';
+    position: absolute;
+    width: 800px; height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.07) 0%, transparent 70%);
+    top: -200px; left: -200px;
+    animation: drift1 18s ease-in-out infinite alternate;
+  }
+  .gradient-bg::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,130,110,0.05) 0%, transparent 70%);
+    bottom: 10%; right: -100px;
+    animation: drift2 22s ease-in-out infinite alternate;
+  }
+  @keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(120px,80px) scale(1.2); } }
+  @keyframes drift2 { from { transform: translate(0,0) scale(1); } to { transform: translate(-80px,-60px) scale(1.15); } }
+
+  /* ── Sticky Nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(10,10,10,0.6);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s;
+  }
+  [data-theme="light"] nav { background: rgba(245,242,237,0.75); }
+  nav.scrolled { background: rgba(10,10,10,0.85); box-shadow: 0 4px 40px rgba(0,0,0,0.3); }
+  [data-theme="light"] nav.scrolled { background: rgba(245,242,237,0.92); }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 600; letter-spacing: 0.15em;
+    color: var(--text); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 400; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text2); text-decoration: none;
+    position: relative; transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px;
+    background: var(--accent); transform: scaleX(0); transform-origin: right;
+    transition: transform 0.3s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  .nav-actions { display: flex; align-items: center; gap: 1rem; }
+
+  .btn-theme {
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid var(--glass-border); background: var(--glass);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; transition: all 0.3s; color: var(--text);
+  }
+  .btn-theme:hover { background: var(--glass-hover); border-color: var(--accent); transform: rotate(20deg); }
+
+  .btn-primary {
+    padding: 0.6rem 1.4rem; border-radius: 50px;
+    background: var(--accent); color: #0a0a0a;
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+    font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: all 0.3s; display: inline-block;
+    box-shadow: 0 0 0 0 var(--accent-glow);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px var(--accent-glow);
+    filter: brightness(1.1);
+  }
+
+  .btn-ghost {
+    padding: 0.6rem 1.4rem; border-radius: 50px;
+    background: transparent; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+    font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase;
+    border: 1px solid var(--glass-border); cursor: pointer; text-decoration: none;
+    transition: all 0.3s; display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  /* ── Sections ── */
+  section { position: relative; z-index: 1; }
+
+  /* ── Hero ── */
+  #hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: calc(var(--nav-h) + 4rem) 5% 5rem;
+    overflow: hidden;
+  }
+  .hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; width: 100%; max-width: 1200px; margin: 0 auto; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 24px; height: 1px; background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1.05;
+    font-weight: 300; letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-title em { font-style: italic; color: var(--accent); }
+
+  .hero-subtitle { font-size: 1rem; color: var(--text2); line-height: 1.7; max-width: 420px; margin-bottom: 2.5rem; }
+
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .hero-visual {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .hero-card {
+    width: 100%; max-width: 420px;
+    background: var(--glass);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2.5rem;
+    position: relative; overflow: hidden;
+    box-shadow: 0 32px 64px rgba(0,0,0,0.3);
+    transform-style: preserve-3d;
+    transition: transform 0.1s;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(201,169,110,0.04) 60deg, transparent 120deg);
+    animation: spin 12s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .hero-card-tag {
+    font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-glow);
+    padding: 0.3rem 0.8rem; border-radius: 50px;
+    border: 1px solid rgba(201,169,110,0.2);
+    display: inline-block; margin-bottom: 1.5rem;
+  }
+  .hero-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 400; margin-bottom: 0.5rem;
+  }
+  .hero-card p { font-size: 0.85rem; color: var(--text2); margin-bottom: 1.5rem; }
+
+  .availability-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+  .avail-label { font-size: 0.8rem; color: var(--text2); }
+  .avail-dot { width: 8px; height: 8px; border-radius: 50%; background: #4caf50; box-shadow: 0 0 6px #4caf50; animation: pulse 2s infinite; }
+  .avail-dot.busy { background: var(--red); box-shadow: 0 0 6px var(--red); }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.9)} }
+
+  .timeslots { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+  .slot {
+    padding: 0.35rem 0.8rem; border-radius: 8px; font-size: 0.75rem; font-weight: 500;
+    border: 1px solid var(--glass-border); cursor: pointer; transition: all 0.2s;
+    color: var(--text2);
+  }
+  .slot:hover, .slot.active { background: var(--accent); color: #0a0a0a; border-color: var(--accent); transform: scale(1.05); }
+  .slot.taken { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; }
+
+  .parallax-float {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(1px);
+    pointer-events: none;
+  }
+  .pf1 { width: 200px; height: 200px; background: radial-gradient(circle, rgba(201,169,110,0.12), transparent); top: 5%; right: -5%; animation: floatA 8s ease-in-out infinite; }
+  .pf2 { width: 120px; height: 120px; background: radial-gradient(circle, rgba(201,130,110,0.1), transparent); bottom: 15%; left: -3%; animation: floatB 11s ease-in-out infinite; }
+  @keyframes floatA { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-20px) rotate(10deg)} }
+  @keyframes floatB { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(15px) rotate(-8deg)} }
+
+  /* ── Divider ── */
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--glass-border), transparent); margin: 0 5%; }
+
+  /* ── Section common ── */
+  .section-wrap { max-width: 1200px; margin: 0 auto; padding: 5rem 5%; }
+  .section-eyebrow { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.6rem; }
+  .section-eyebrow::before { content:''; width:20px; height:1px; background:var(--accent); }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem,4vw,3.5rem); font-weight: 300; line-height: 1.1; margin-bottom: 1rem; }
+  .section-title em { font-style: italic; color: var(--accent); }
+  .section-sub { color: var(--text2); max-width: 480px; line-height: 1.7; font-size: 0.95rem; }
+
+  /* ── Bento Grid Services ── */
+  #services { padding: 0; }
+
+  .bento-header { padding: 5rem 5% 3rem; max-width: 1200px; margin: 0 auto; }
+
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 12px;
+    padding: 0 5% 5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .bento-card {
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    position: relative; overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s, border-color 0.3s, background 0.3s;
+    cursor: default;
+  }
+  .bento-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(201,169,110,0.3);
+    background: var(--glass-hover);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.2), 0 0 0 1px rgba(201,169,110,0.1) inset;
+  }
+  .bento-card::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,169,110,0.4), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .bento-card:hover::after { opacity: 1; }
+
+  .bc-1 { grid-column: span 7; grid-row: span 2; }
+  .bc-2 { grid-column: span 5; }
+  .bc-3 { grid-column: span 5; }
+  .bc-4 { grid-column: span 4; }
+  .bc-5 { grid-column: span 4; }
+  .bc-6 { grid-column: span 4; }
+
+  .bento-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--accent-glow); border: 1px solid rgba(201,169,110,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 1.5rem;
+  }
+  .bento-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 400; margin-bottom: 0.5rem;
+  }
+  .bc-1 h3 { font-size: 2.2rem; }
+  .bento-card p { font-size: 0.85rem; color: var(--text2); line-height: 1.65; }
+  .bento-price {
+    margin-top: 1.5rem;
+    font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300;
+    color: var(--accent);
+  }
+  .bento-price span { font-size: 0.85rem; font-family: 'DM Sans', sans-serif; color: var(--text3); }
+
+  .bento-tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .bento-tag {
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text2); border: 1px solid var(--glass-border);
+    padding: 0.2rem 0.6rem; border-radius: 4px;
+  }
+
+  .bc-1 .bento-bg {
+    position: absolute; right: -20px; bottom: -20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11rem; line-height: 1; color: rgba(201,169,110,0.05);
+    pointer-events: none; user-select: none; font-weight: 600;
+  }
+
+  /* Mobile badge */
+  .mobile-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: rgba(201,169,110,0.1); border: 1px solid rgba(201,169,110,0.25);
+    border-radius: 50px; padding: 0.25rem 0.7rem;
+    font-size: 0.7rem; color: var(--accent); letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+  .mobile-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+
+  /* ── Mobile Service Section ── */
+  #mobile {
+    background: linear-gradient(135deg, rgba(201,169,110,0.03) 0%, transparent 60%);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .mobile-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; max-width: 1200px; margin: 0 auto; padding: 6rem 5%; }
+
+  .mobile-visual { position: relative; }
+  .mobile-card {
+    background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem;
+    box-shadow: 0 32px 64px rgba(0,0,0,0.2);
+  }
+  .mobile-steps { margin-top: 1.5rem; }
+  .step-item {
+    display: flex; gap: 1rem; align-items: flex-start; padding: 0.75rem 0;
+    border-bottom: 1px solid var(--glass-border);
+    opacity: 0; transform: translateX(-20px);
+    transition: all 0.5s;
+  }
+  .step-item:last-child { border-bottom: none; }
+  .step-item.visible { opacity: 1; transform: translateX(0); }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+    background: var(--accent-glow); border: 1px solid rgba(201,169,110,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 500; color: var(--accent);
+  }
+  .step-text { font-size: 0.85rem; color: var(--text2); padding-top: 0.3rem; }
+  .step-text strong { color: var(--text); font-weight: 500; display: block; margin-bottom: 0.2rem; }
+
+  .avail-note {
+    margin-top: 1.5rem; padding: 1rem; border-radius: 10px;
+    background: rgba(201,169,110,0.07); border: 1px solid rgba(201,169,110,0.15);
+    font-size: 0.8rem; color: var(--text2); line-height: 1.6;
+  }
+  .avail-note strong { color: var(--accent); }
+
+  /* ── Team ── */
+  #team { }
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  .team-card {
+    background: var(--glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border); border-radius: var(--radius);
+    padding: 2rem; text-align: center;
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+  }
+  .team-card:hover { transform: translateY(-6px); box-shadow: 0 24px 48px rgba(0,0,0,0.2); }
+
+  .avatar {
+    width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 1.2rem;
+    background: var(--accent-glow); border: 2px solid rgba(201,169,110,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--accent);
+    position: relative;
+  }
+  .avatar::after {
+    content: ''; position: absolute; inset: -4px; border-radius: 50%;
+    border: 1px solid rgba(201,169,110,0.15); animation: spin 8s linear infinite;
+    border-top-color: rgba(201,169,110,0.4);
+  }
+  .team-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 0.25rem; }
+  .team-card .role { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+  .team-card p { font-size: 0.82rem; color: var(--text2); line-height: 1.6; }
+
+  /* ── Stats Bar ── */
+  #stats {
+    background: linear-gradient(90deg, var(--accent-glow), rgba(201,130,110,0.05), var(--accent-glow));
+    border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);
+  }
+  .stats-inner { display: flex; justify-content: space-around; padding: 3rem 5%; max-width: 1200px; margin: 0 auto; }
+  .stat-item { text-align: center; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; color: var(--accent); display: block; }
+  .stat-label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2); }
+
+  /* ── Booking CTA ── */
+  #booking {
+    text-align: center; padding: 7rem 5%;
+    background: linear-gradient(180deg, transparent, rgba(201,169,110,0.04), transparent);
+  }
+  #booking .section-eyebrow { justify-content: center; }
+  #booking .section-eyebrow::before { display: none; }
+  #booking .section-sub { margin: 1rem auto 2.5rem; text-align: center; }
+
+  .booking-form {
+    max-width: 560px; margin: 0 auto;
+    background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 20px;
+    padding: 2.5rem;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+  .form-group label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+  .form-group input, .form-group select {
+    background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border);
+    border-radius: 10px; padding: 0.75rem 1rem;
+    color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    outline: none; transition: border-color 0.3s, box-shadow 0.3s;
+    appearance: none;
+  }
+  [data-theme="light"] .form-group input, [data-theme="light"] .form-group select { background: rgba(0,0,0,0.04); }
+  .form-group input:focus, .form-group select:focus {
+    border-color: rgba(201,169,110,0.5);
+    box-shadow: 0 0 0 3px rgba(201,169,110,0.1);
+  }
+  .form-group input::placeholder { color: var(--text3); }
+  .mobile-toggle-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1rem; background: rgba(255,255,255,0.03);
+    border: 1px solid var(--glass-border); border-radius: 10px; margin-bottom: 1rem;
+  }
+  .mobile-toggle-label { font-size: 0.85rem; color: var(--text2); }
+  .toggle {
+    width: 44px; height: 24px; border-radius: 12px; border: none; cursor: pointer;
+    background: var(--glass-border); position: relative; transition: background 0.3s;
+    flex-shrink: 0;
+  }
+  .toggle::after {
+    content: ''; position: absolute; left: 3px; top: 3px;
+    width: 18px; height: 18px; border-radius: 50%; background: var(--text2);
+    transition: all 0.3s;
+  }
+  .toggle.on { background: var(--accent); }
+  .toggle.on::after { left: 23px; background: #0a0a0a; }
+  .avail-hint { font-size: 0.75rem; color: var(--text3); text-align: center; margin-top: 0.5rem; }
+
+  /* ── Footer ── */
+  footer {
+    background: var(--bg2); border-top: 1px solid var(--glass-border);
+    padding: 3rem 5% 2rem;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; letter-spacing: 0.15em; color: var(--text); margin-bottom: 1rem; }
+  .footer-logo span { color: var(--accent); }
+  .footer-tagline { font-size: 0.85rem; color: var(--text2); line-height: 1.6; max-width: 260px; }
+  .footer-col h5 { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text3); margin-bottom: 1rem; }
+  .footer-col a { display: block; font-size: 0.85rem; color: var(--text2); text-decoration: none; margin-bottom: 0.6rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom { border-top: 1px solid var(--glass-border); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-size: 0.75rem; color: var(--text3); }
+
+  /* ── Reveal on scroll ── */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left { opacity: 0; transform: translateX(-30px); transition: opacity 0.7s, transform 0.7s; }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right { opacity: 0; transform: translateX(30px); transition: opacity 0.7s, transform 0.7s; }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  .reveal:nth-child(2) { transition-delay: 0.1s; }
+  .reveal:nth-child(3) { transition-delay: 0.2s; }
+  .reveal:nth-child(4) { transition-delay: 0.3s; }
+
+  /* ── Hamburger ── */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger span { width: 22px; height: 1.5px; background: var(--text); display: block; transition: all 0.3s; border-radius: 2px; }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-card { max-width: 100%; }
+    .bento-grid { grid-template-columns: repeat(6, 1fr); }
+    .bc-1 { grid-column: span 6; }
+    .bc-2, .bc-3 { grid-column: span 3; }
+    .bc-4, .bc-5, .bc-6 { grid-column: span 6; }
+    .mobile-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .stats-inner { flex-wrap: wrap; gap: 2rem; }
+  }
+  @media (max-width: 600px) {
+    .bento-grid { grid-template-columns: 1fr; }
+    .bc-1,.bc-2,.bc-3,.bc-4,.bc-5,.bc-6 { grid-column: span 1; }
+    .team-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-cta { flex-direction: column; }
+    .hero-cta a, .hero-cta button { width: 100%; text-align: center; }
+    .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    nav { padding: 0 4%; }
+    .section-wrap { padding: 3rem 4%; }
+  }
+
+  /* ── Cursor ── */
+  .cursor {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 1px solid rgba(201,169,110,0.6);
+    position: fixed; pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: width 0.3s, height 0.3s, opacity 0.3s, background 0.3s;
+  }
+  .cursor-dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--accent); position: fixed; pointer-events: none;
+    z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s;
+  }
+  @media (hover: none) { .cursor, .cursor-dot { display: none; } }
+
+  /* ── Nav mobile menu ── */
+  .mobile-menu {
+    position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; z-index: 99;
+    background: rgba(10,10,10,0.97); backdrop-filter: blur(30px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2.5rem; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.77,0,0.175,1);
+  }
+  [data-theme="light"] .mobile-menu { background: rgba(245,242,237,0.97); }
+  .mobile-menu.open { transform: translateX(0); }
+  .mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--text); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+  .mobile-menu a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- Animated background -->
+<div class="gradient-bg"></div>
+
+<!-- Sticky Navigation -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">NO<span>I</span>R</a>
+  <ul class="nav-links">
+    <li><a href="#services">Leistungen</a></li>
+    <li><a href="#mobile">Mobil</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#booking">Termin</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-theme" id="themeToggle" aria-label="Dark/Light Mode">🌙</button>
+    <a href="#booking" class="btn-primary" style="display:none" id="navCTA">Buchen</a>
+    <button class="hamburger" id="hamburger" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="closeMobile()">Leistungen</a>
+  <a href="#mobile" onclick="closeMobile()">Mobiler Service</a>
+  <a href="#team" onclick="closeMobile()">Team</a>
+  <a href="#booking" onclick="closeMobile()">Termin buchen</a>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Premium Friseursalon</div>
+      <h1 class="hero-title">Haar&shy;kunst,<br><em>neu definiert.</em></h1>
+      <p class="hero-subtitle">Präzision trifft Stil. Bei NOIR erleben Sie hochwertige Friseurkunst im Salon oder bequem bei Ihnen zuhause – auf Anfrage.</p>
+      <div class="hero-cta">
+        <a href="#booking" class="btn-primary">Termin vereinbaren</a>
+        <a href="#services" class="btn-ghost">Leistungen</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="parallax-float pf1"></div>
+      <div class="parallax-float pf2"></div>
+      <div class="hero-card" id="heroCard">
+        <div class="hero-card-tag">Nächste freie Slots</div>
+        <h3>Heute verfügbar</h3>
+        <p>Wählen Sie Ihren Wunschtermin für morgen</p>
+        <div class="availability-row">
+          <span class="avail-label">Salon · Di, 10. Juni</span>
+          <span class="avail-dot"></span>
+        </div>
+        <div class="timeslots">
+          <div class="slot" onclick="selectSlot(this)">10:00</div>
+          <div class="slot taken">11:30</div>
+          <div class="slot" onclick="selectSlot(this)">13:00</div>
+          <div class="slot taken">14:30</div>
+          <div class="slot" onclick="selectSlot(this)">16:00</div>
+          <div class="slot" onclick="selectSlot(this)">17:30</div>
+        </div>
+        <div style="margin-top:1.2rem; border-top: 1px solid var(--glass-border); padding-top: 1rem;">
+          <div class="availability-row">
+            <span class="avail-label" style="font-size:0.75rem">🚗 Hausbesuch (auf Anfrage)</span>
+            <span class="avail-dot busy"></span>
+          </div>
+          <div style="font-size:0.72rem; color:var(--text3); margin-top:0.3rem">Nächster mobiler Slot: Do, 12. Juni ab 14 Uhr</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── STATS ── -->
+<section id="stats">
+  <div class="stats-inner">
+    <div class="stat-item reveal">
+      <span class="stat-num" data-target="12">0</span>
+      <span class="stat-label">Jahre Erfahrung</span>
+    </div>
+    <div class="stat-item reveal">
+      <span class="stat-num" data-target="4800">0</span>
+      <span class="stat-label">Zufriedene Kunden</span>
+    </div>
+    <div class="stat-item reveal">
+      <span class="stat-num" data-target="98">0</span>
+      <span class="stat-label">% Kundenzufriedenheit</span>
+    </div>
+    <div class="stat-item reveal">
+      <span class="stat-num" data-target="3">0</span>
+      <span class="stat-label">Mobile Tage / Woche</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES (BENTO) ── -->
+<section id="services">
+  <div class="bento-header">
+    <div class="section-eyebrow reveal">Unsere Leistungen</div>
+    <h2 class="section-title reveal">Alles, was Ihre<br><em>Haare brauchen.</em></h2>
+    <p class="section-sub reveal">Von der klassischen Pflege bis zur modernen Coloration – präzise, stilbewusst, persönlich.</p>
+  </div>
+  <div class="bento-grid">
+
+    <div class="bento-card bc-1 reveal">
+      <div class="mobile-badge"><span class="mobile-dot"></span> Auch als Hausbesuch</div>
+      <h3>Waschen, Schneiden & Föhnen</h3>
+      <p>Das klassische Rundum-Paket – sorgfältig gewaschen, präzise geschnitten und professionell gestylt. Das Herzstück unseres Salons.</p>
+      <div class="bento-tag-list">
+        <span class="bento-tag">Damen</span>
+        <span class="bento-tag">Herren</span>
+        <span class="bento-tag">Kinder</span>
+        <span class="bento-tag">Alle Haartypen</span>
+      </div>
+      <div class="bento-price">ab 45 € <span>/ inkl. Beratung</span></div>
+      <div class="bc-1 bento-bg">✂</div>
+    </div>
+
+    <div class="bento-card bc-2 reveal">
+      <div class="bento-icon">💈</div>
+      <h3>Herrenschnitt</h3>
+      <p>Klassisch oder modern – präzise Schnitte, die Ihren Stil unterstreichen.</p>
+      <div class="bento-price">ab 25 €</div>
+    </div>
+
+    <div class="bento-card bc-3 reveal">
+      <div class="bento-icon">🌈</div>
+      <h3>Balayage & Highlights</h3>
+      <p>Handgemalte Farbakzente für natürliche Tiefe und Dimension im Haar.</p>
+      <div class="bento-price">ab 80 €</div>
+    </div>
+
+    <div class="bento-card bc-4 reveal">
+      <div class="bento-icon">🧴</div>
+      <h3>Haarkur</h3>
+      <p>Intensive Pflege für gesundes Haar – ideal nach Colorationen.</p>
+      <div class="bento-price">ab 15 €</div>
+    </div>
+
+    <div class="bento-card bc-5 reveal">
+      <div class="bento-icon">🪒</div>
+      <h3>Bartpflege</h3>
+      <p>Präzise Bartformung und klassische Rasur – Pflege für den modernen Herrn.</p>
+      <div class="bento-price">ab 20 €</div>
+    </div>
+
+    <div class="bento-card bc-6 reveal">
+      <div class="mobile-badge"><span class="mobile-dot"></span> Hausbesuch möglich</div>
+      <h3>Coloration</h3>
+      <p>Komplette Haarfarbe – frisch, leuchtend, langanhaltend.</p>
+      <div class="bento-price">ab 65 €</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── MOBILE SERVICE ── -->
+<section id="mobile">
+  <div class="mobile-inner">
+    <div class="reveal-left">
+      <div class="section-eyebrow">Besonderer Service</div>
+      <h2 class="section-title">Friseur kommt<br><em>zu Ihnen.</em></h2>
+      <p class="section-sub" style="margin-bottom:2rem">Unser mobiler Hausbesuchsservice steht <strong style="color:var(--text)">auf Anfrage</strong> zur Verfügung – ideal für Senioren, Personen mit eingeschränkter Mobilität oder besondere Anlässe.</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="#booking" class="btn-primary">Hausbesuch anfragen</a>
+        <a href="tel:+49000000000" class="btn-ghost">Direkt anrufen</a>
+      </div>
+      <div class="avail-note" style="margin-top:1.5rem">
+        <strong>Wichtig:</strong> Der mobile Service ist nicht täglich verfügbar. Wir bitten um Anfragen <strong>mindestens 48 Stunden im Voraus</strong>. Verfügbarkeit: Di & Do, 14–18 Uhr. Fahrtpauschale ab 10 € je nach Entfernung.
+      </div>
+    </div>
+    <div class="mobile-visual reveal-right">
+      <div class="mobile-card">
+        <div class="mobile-badge"><span class="mobile-dot"></span> Mobiler Service</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;margin-bottom:1rem">Wie es funktioniert</h3>
+        <div class="mobile-steps" id="mobileSteps">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Termin anfragen</strong>Kontaktieren Sie uns mind. 48 Std. vorab telefonisch oder per E-Mail.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Verfügbarkeit prüfen</strong>Wir prüfen Kapazitäten & Entfernung und bestätigen Ihnen den Termin.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Wir kommen zu Ihnen</strong>Unser Fachpersonal kommt pünktlich mit dem kompletten Equipment.</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-text"><strong>Genießen Sie den Service</strong>Bequem bei Ihnen zuhause – gleiche Qualität wie im Salon.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TEAM ── -->
+<section id="team">
+  <div class="section-wrap">
+    <div class="section-eyebrow reveal">Unser Team</div>
+    <h2 class="section-title reveal">Leidenschaft<br><em>trifft Können.</em></h2>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="avatar">S</div>
+        <h4>Sophie Laurent</h4>
+        <div class="role">Senior Stylistin</div>
+        <p>Spezialistin für Colorationen und moderne Schnitte. 10 Jahre Erfahrung im Premium-Segment.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="avatar">M</div>
+        <h4>Markus Weber</h4>
+        <div class="role">Herrenstylist & Barber</div>
+        <p>Meister seines Fachs – klassische Herrenschnitte, Bartpflege und moderne Stylings.</p>
+      </div>
+      <div class="team-card reveal">
+        <div class="avatar">L</div>
+        <h4>Lena Hoffmann</h4>
+        <div class="role">Mobiler Service</div>
+        <p>Spezialistin für den Hausbesuchsservice – einfühlsam, flexibel und immer termingerecht.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BOOKING CTA ── -->
+<section id="booking">
+  <div class="section-eyebrow reveal">Jetzt buchen</div>
+  <h2 class="section-title reveal" style="text-align:center">Ihr Termin bei<br><em>NOIR.</em></h2>
+  <p class="section-sub reveal" style="margin:1rem auto 2.5rem;text-align:center">Wählen Sie Ihre Wunschleistung und buchen Sie direkt online – oder fragen Sie unseren mobilen Service an.</p>
+
+  <div class="booking-form reveal">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Vorname</label>
+        <input type="text" placeholder="Max">
+      </div>
+      <div class="form-group">
+        <label>Nachname</label>
+        <input type="text" placeholder="Mustermann">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Leistung</label>
+      <select>
+        <option>Waschen, Schneiden & Föhnen (ab 45 €)</option>
+        <option>Herrenhaarschnitt (ab 25 €)</option>
+        <option>Balayage & Highlights (ab 80 €)</option>
+        <option>Coloration komplett (ab 65 €)</option>
+        <option>Bartpflege & Rasur (ab 20 €)</option>
+        <option>Haarkur (ab 15 €)</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Datum</label>
+        <input type="date">
+      </div>
+      <div class="form-group">
+        <label>Uhrzeit</label>
+        <select>
+          <option>09:00 Uhr</option>
+          <option>10:00 Uhr</option>
+          <option>11:00 Uhr</option>
+          <option>12:00 Uhr</option>
+          <option>13:00 Uhr</option>
+          <option>14:00 Uhr</option>
+          <option>15:00 Uhr</option>
+          <option>16:00 Uhr</option>
+          <option>17:00 Uhr</option>
+        </select>
+      </div>
+    </div>
+    <div class="mobile-toggle-row">
+      <div>
+        <div class="mobile-toggle-label">🚗 Mobiler Hausbesuch gewünscht</div>
+        <div style="font-size:0.72rem;color:var(--text3);margin-top:0.2rem">Nur auf Anfrage – di & do 14–18 Uhr</div>
+      </div>
+      <button class="toggle" id="mobileToggle" onclick="toggleMobile(this)" aria-label="Hausbesuch ein/aus"></button>
+    </div>
+    <p class="avail-hint" id="mobileHint" style="display:none;color:var(--accent);font-size:0.75rem;text-align:left;margin-bottom:1rem">⚠ Wir prüfen Verfügbarkeit und melden uns innerhalb von 24 Std.</p>
+    <button class="btn-primary" style="width:100%;padding:0.9rem;font-size:0.9rem;border-radius:12px" onclick="submitBooking()">Terminanfrage senden →</button>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">NO<span>I</span>R</div>
+        <p class="footer-tagline">Premium Friseursalon in Ihrer Stadt – mit optionalem mobilem Hausbesuchsservice auf Anfrage.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Salon</h5>
+        <a href="#services">Leistungen</a>
+        <a href="#team">Team</a>
+        <a href="#booking">Termin</a>
+      </div>
+      <div class="footer-col">
+        <h5>Service</h5>
+        <a href="#mobile">Mobiler Service</a>
+        <a href="#">Preisliste</a>
+        <a href="#">Produkte</a>
+      </div>
+      <div class="footer-col">
+        <h5>Kontakt</h5>
+        <a href="tel:+49000000000">+49 (0) 000 000 000</a>
+        <a href="mailto:info@noir-salon.de">info@noir-salon.de</a>
+        <a href="#">Mo–Fr: 9–19 Uhr</a>
+        <a href="#">Sa: 9–17 Uhr</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 NOIR Salon. Alle Rechte vorbehalten.</span>
+      <span class="footer-copy">Impressum · Datenschutz</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Dark/Light Toggle ──
+const html = document.documentElement;
+const themeBtn = document.getElementById('themeToggle');
+let isDark = true;
+themeBtn.addEventListener('click', () => {
+  isDark = !isDark;
+  html.dataset.theme = isDark ? 'dark' : 'light';
+  themeBtn.textContent = isDark ? '🌙' : '☀️';
+});
+
+// ── Sticky Nav ──
+const nav = document.getElementById('mainNav');
+const navCTA = document.getElementById('navCTA');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 80) {
+    nav.classList.add('scrolled');
+    navCTA.style.display = 'inline-block';
+  } else {
+    nav.classList.remove('scrolled');
+    navCTA.style.display = 'none';
+  }
+});
+
+// ── Hamburger ──
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+let menuOpen = false;
+hamburger.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  mobileMenu.classList.toggle('open', menuOpen);
+  const spans = hamburger.querySelectorAll('span');
+  if (menuOpen) {
+    spans[0].style.transform = 'rotate(45deg) translate(4px, 4px)';
+    spans[1].style.opacity = '0';
+    spans[2].style.transform = 'rotate(-45deg) translate(4px, -4px)';
+  } else {
+    spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+  }
+});
+function closeMobile() {
+  menuOpen = false;
+  mobileMenu.classList.remove('open');
+  hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+}
+
+// ── Reveal on Scroll ──
+const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(el => observer.observe(el));
+
+// ── Mobile Steps Reveal ──
+const stepsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const steps = e.target.querySelectorAll('.step-item');
+      steps.forEach((s, i) => { setTimeout(() => s.classList.add('visible'), i * 180); });
+    }
+  });
+}, { threshold: 0.3 });
+const stepsContainer = document.getElementById('mobileSteps');
+if (stepsContainer) stepsObserver.observe(stepsContainer);
+
+// ── Count-up animation ──
+const statNums = document.querySelectorAll('.stat-num[data-target]');
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const target = +el.dataset.target;
+      const duration = 1800;
+      const step = target / (duration / 16);
+      let current = 0;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = target > 100 ? Math.round(current).toLocaleString('de') : Math.round(current);
+        if (current >= target) clearInterval(timer);
+      }, 16);
+      countObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+statNums.forEach(el => countObserver.observe(el));
+
+// ── Parallax ──
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  document.querySelectorAll('.parallax-float').forEach((el, i) => {
+    const speed = i === 0 ? 0.08 : -0.06;
+    el.style.transform = `translateY(${scrollY * speed}px)`;
+  });
+  const heroCard = document.getElementById('heroCard');
+  if (heroCard && scrollY < window.innerHeight) {
+    heroCard.style.transform = `translateY(${scrollY * 0.04}px)`;
+  }
+});
+
+// ── 3D Tilt on hero card ──
+const heroCard = document.getElementById('heroCard');
+if (heroCard) {
+  heroCard.addEventListener('mousemove', (e) => {
+    const rect = heroCard.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    heroCard.style.transform = `perspective(1000px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(0)`;
+  });
+  heroCard.addEventListener('mouseleave', () => {
+    heroCard.style.transform = 'perspective(1000px) rotateY(0) rotateX(0)';
+  });
+}
+
+// ── Custom Cursor ──
+const cursor = document.getElementById('cursor');
+const cursorDot = document.getElementById('cursorDot');
+let mx = 0, my = 0, cx = 0, cy = 0;
+document.addEventListener('mousemove', (e) => {
+  mx = e.clientX; my = e.clientY;
+  cursorDot.style.left = mx + 'px';
+  cursorDot.style.top = my + 'px';
+});
+function animateCursor() {
+  cx += (mx - cx) * 0.12;
+  cy += (my - cy) * 0.12;
+  cursor.style.left = cx + 'px';
+  cursor.style.top = cy + 'px';
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+document.querySelectorAll('a, button, .slot, .bento-card, .team-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '40px';
+    cursor.style.height = '40px';
+    cursor.style.background = 'rgba(201,169,110,0.08)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '20px';
+    cursor.style.height = '20px';
+    cursor.style.background = 'transparent';
+  });
+});
+
+// ── Slot selection ──
+function selectSlot(el) {
+  document.querySelectorAll('.slot').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── Mobile toggle ──
+function toggleMobile(btn) {
+  btn.classList.toggle('on');
+  const hint = document.getElementById('mobileHint');
+  hint.style.display = btn.classList.contains('on') ? 'block' : 'none';
+}
+
+// ── Booking submit ──
+function submitBooking() {
+  const btn = event.target;
+  btn.textContent = '✓ Anfrage gesendet!';
+  btn.style.background = '#4caf50';
+  setTimeout(() => {
+    btn.textContent = 'Terminanfrage senden →';
+    btn.style.background = '';
+  }, 3000);
+}
+</script>
+</body>
+</html>
