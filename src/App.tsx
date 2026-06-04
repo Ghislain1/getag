@@ -1,3 +1,4 @@
+import { AnnouncementBar } from './components/AnnouncementBar';
 import CustomCursor from './components/CustomCursor';
 import GradientBg from './components/GradientBg';
 import Navbar from './components/Navbar';
@@ -10,17 +11,16 @@ import Footer from './components/Footer';
 import FloatingActions from './components/FloatingActions';
 import { useTheme } from './hooks/useTheme';
 import { EmberParticles } from './components/EmberParticles';
-import { AnnouncementBar } from './components/AnnouncementBar';
 
 export default function App() {
   const { isDark, toggle } = useTheme();
 
   return (
     <>
+      <AnnouncementBar />
       <CustomCursor />
       <GradientBg />
       <Navbar isDark={isDark} onToggleTheme={toggle} />
-      <AnnouncementBar />
       <main>
         <Hero />
         <EmberParticles />

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useMobileMenu } from '../hooks/useMobileMenu';
 import MobileMenu from './MobileMenu';
-import { AnnouncementBar } from './AnnouncementBar';
 
 interface NavbarProps {
   isDark: boolean;
