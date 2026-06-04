@@ -17,11 +17,11 @@ export function AnnouncementBar() {
   const doubledItems = [...items, ...items];
 
   return (
-    <div className="fixed top-20 left-0 right-0 z-50 transition-all duration-300 overflow-hidden bg-yellow-300   shadow-lg bg-transparent">
+    <div className="fixed top-20 left-0 right-0 z-50 transition-all duration-300 overflow-hidden bg-white shadow-lg bg-transparent">
       <div className="flex h-10 justify-center animate-[marquee_22s_linear_infinite]" style={{ width: 'max-content' }}>
         {doubledItems.map((text, i) => (
           <span key={i} className="flex items-center gap-3 px-8 text-lg font-medium text-red-600 whitespace-nowrap">
-            <SirenIcon className="h-3.5 w-3.5 shrink-0 bg-(--color-main) text-red" />
+            <SirenIcon className="h-3.5 w-3.5 shrink-0 bg-(--color-main) text-yellow-300" />
             {text}
           </span>
         ))}
