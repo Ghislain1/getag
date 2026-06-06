@@ -18,27 +18,29 @@ export default function App() {
 
   return (
     <>
-      <AnnouncementBar />
+
       <CustomCursor />
       <GradientBg />
       <Navbar isDark={isDark} onToggleTheme={toggle} />
-      <AnnouncementBar
-        items={[
-          "✂️ Schneiden, Föhnen & Styling",
-          "💈 Herrenschnitt ab 25€",
-          "🌈 Balayage & Highlights",
-          "🧴 Haarkur & Pflege",
-        ]}
-        speed="28s"
-        position="static"
-        className="border-b border-glass-border"
-      />
+
       <main>
+        <AnnouncementBar
+          items={[
+            "✂️ Schneiden, Föhnen & Styling",
+            "💈 Herrenschnitt ab 25€",
+            "🌈 Balayage & Highlights",
+            "🧴 Haarkur & Pflege",
+          ]}
+          speed="28s"
+          position="static"
+          className="border-b border-glass-border mt-20 fixed"
+        />
         <Hero />
         <EmberParticles />
+        <div className="divider" />
         <About />
         <div className="divider" />
-        <Stats />
+
         <Services />
         <div className="divider" />
         <Gallery />
