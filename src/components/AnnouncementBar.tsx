@@ -16,8 +16,8 @@ export function AnnouncementBar() {
     "Keine Wartezeit",
     "Bequem bei Ihnen zu Hause",
     "Flexibel",
-    " Text todo 1",
-    " Text todo 2",
+    "20€: Erwachsene",
+    "15€: Kinder",
     "Mobiles Friseurteam",
     "Terminvereinbarung 24/7",
   ];
