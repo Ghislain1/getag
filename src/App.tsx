@@ -3,6 +3,7 @@ import CustomCursor from './components/CustomCursor';
 import GradientBg from './components/GradientBg';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import About from './components/About';
 import Stats from './components/Stats';
 import Services from './components/Services';
 import MobileService from './components/MobileService';
@@ -24,6 +25,7 @@ export default function App() {
       <main>
         <Hero />
         <EmberParticles />
+        <About />
         <div className="divider" />
         <Stats />
         <Services />
