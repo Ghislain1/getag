@@ -1,7 +1,7 @@
-import { useParallax } from '../hooks/useParallax';
-import heroLeft from '../assets/getag_hero_left.png';
-import heroRight from '../assets/getag_hero_right.png';
-import hero1 from '../assets/getag_hero_1.png';
+import { useParallax } from '../../hooks/useParallax';
+import heroLeft from '../../assets/getag_hero_left.png';
+import heroRight from '../../assets/getag_hero_right.png';
+import hero1 from '../../assets/getag_hero_1.png';
 
 export default function Hero() {
   const { setFloatRef } = useParallax();

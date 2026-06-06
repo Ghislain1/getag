@@ -1,4 +1,4 @@
-import ScrollReveal from './ScrollReveal';
+import ScrollReveal from '../shared/ScrollReveal';
 
 interface ServiceCard {
   id: number;

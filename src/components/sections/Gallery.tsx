@@ -1,4 +1,6 @@
-import ScrollReveal from './ScrollReveal';
+import ScrollReveal from "../shared/ScrollReveal";
+
+
 
 const images = [
   {
