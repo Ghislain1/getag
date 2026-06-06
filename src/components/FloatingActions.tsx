@@ -30,7 +30,7 @@ export default function FloatingActions() {
         <DrawingPinFilledIcon width={18} height={18} />
       </a>
       <a
-        href="tel:+49000000000"
+        href="tel:+4915259269888"
         className={btnClass}
         aria-label="Anrufen"
       >

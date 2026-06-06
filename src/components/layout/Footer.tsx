@@ -23,7 +23,7 @@ export default function Footer() {
           </div>
           <div>
             <h5 className="mb-4 text-[0.7rem] uppercase tracking-[0.15em] text-ink-3">Kontakt</h5>
-            <a href="tel:+49000000000" className="mb-[0.6rem] block text-[0.85rem] text-ink-2 no-underline transition-colors duration-200 hover:text-red-600">+49 (0) 000 000 000</a>
+            <a href="tel:+4915259269888" className="mb-[0.6rem] block text-[0.85rem] text-ink-2 no-underline transition-colors duration-200 hover:text-red-600">+49 1525 9269888</a>
             <a href="mailto:info@gery-salon.de" className="mb-[0.6rem] block text-[0.85rem] text-ink-2 no-underline transition-colors duration-200 hover:text-red-600">info@gery-salon.de</a>
             <a href="#" className="mb-[0.6rem] block text-[0.85rem] text-ink-2 no-underline transition-colors duration-200 hover:text-red-600">Mo–Fr: 9–19 Uhr</a>
             <a href="#" className="mb-[0.6rem] block text-[0.85rem] text-ink-2 no-underline transition-colors duration-200 hover:text-red-600">Sa: 9–17 Uhr</a>

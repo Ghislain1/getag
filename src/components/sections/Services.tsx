@@ -20,9 +20,9 @@ export default function Services() {
         <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(220,38,38,0.4) 0%, transparent 70%)' }} />
       </div>
       <div className="mx-auto max-w-[1200px] px-[5%] pt-20 pb-12 relative z-[1]">
-        <ScrollReveal className="reveal section-eyebrow">Unsere Leistungen</ScrollReveal>
-        <ScrollReveal className="reveal section-title">Alles, was Ihre<br /><em>Haare brauchen.</em></ScrollReveal>
-        <ScrollReveal className="reveal section-sub">Von der klassischen Pflege bis zur modernen Coloration – präzise, stilbewusst, persönlich.</ScrollReveal>
+        <ScrollReveal className="reveal section-eyebrow !text-white/80 before:!bg-white/80">Unsere Leistungen</ScrollReveal>
+        <ScrollReveal className="reveal section-title !text-white">Alles, was Ihre<br /><em className="!text-white">Haare brauchen.</em></ScrollReveal>
+        <ScrollReveal className="reveal section-sub !text-white/60">Von der klassischen Pflege bis zur modernen Coloration – präzise, stilbewusst, persönlich.</ScrollReveal>
       </div>
 
       <div className="mx-auto mb-10 grid max-w-[1200px] grid-cols-1 gap-3 px-[5%] md:grid-cols-2 relative z-[2]">

@@ -1,51 +1,59 @@
 import ScrollReveal from "../shared/ScrollReveal";
+import { useTilt } from "../../hooks/useTilt";
 
+import imgTools from "../../assets/getag_gallerie_tools.png";
+import imgBoyGrey from "../../assets/getag_gallerie_boy_grey.png";
+import imgBoyRed from "../../assets/getag_gallerie_boy_red.png";
+import imgBoyYellow from "../../assets/getag_gallerie_boy_yellow.png";
 
-
-const images = [
+const cards = [
   {
+    img: imgBoyRed,
     label: 'Schnitte',
-    desc: 'Präzise Haarschnitte für Damen & Herren',
-    gradient: 'from-red-600 via-red-800 to-red-900',
-    icon: '✂',
-    span: 'md:col-span-2 md:row-span-2',
+    desc: 'Präzise Haarschnitte für Herren',
+    span: 'md:col-span-4 md:row-span-2',
+    accent: '#dc2626',
   },
   {
-    label: 'Colorationen',
+    img: imgBoyYellow,
+    label: 'Schnitte',
     desc: 'Balayage, Highlights & mehr',
-    gradient: 'from-red-800 via-red-700 to-red-500',
-    icon: '🌈',
     span: 'md:col-span-2',
+    accent: '#eab308',
   },
   {
+    img: imgTools,
     label: 'Bartpflege',
     desc: 'Klassische Rasur & Bartstyling',
-    gradient: 'from-neutral-900 via-neutral-800 to-neutral-600',
-    icon: '🪒',
     span: 'md:col-span-2',
+    accent: '#a855f7',
   },
   {
-    label: 'Salon Ambiente',
-    desc: 'Unser Salon – modern & einladend',
-    gradient: 'from-neutral-950 via-neutral-900 to-neutral-800',
-    icon: '🏛',
-    span: 'md:col-span-3',
-  },
-  {
-    label: 'Hochzeitsfrisuren',
+    img: imgBoyGrey,
+    label: 'Jungsfrisuren',
     desc: 'Besondere Looks für besondere Tage',
-    gradient: 'from-red-200 via-red-600 to-red-800',
-    icon: '💍',
-    span: 'md:col-span-3',
+    span: 'md:col-span-3 md:row-span-2',
+    accent: '#f97316',
   },
-  {
-    label: 'Before & After',
-    desc: 'Verwandlungen, die überzeugen',
-    gradient: 'from-[#0a0a0a] via-neutral-900 to-red-600',
-    icon: '✨',
-    span: 'md:col-span-4',
-  },
+
 ];
+
+function TiltCard({
+  children,
+  className,
+  style,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const ref = useTilt();
+  return (
+    <div ref={ref} className={className} style={style}>
+      {children}
+    </div>
+  );
+}
 
 export default function Gallery() {
   return (
@@ -58,26 +66,60 @@ export default function Gallery() {
         </ScrollReveal>
       </div>
       <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-4 px-[5%] pb-20 md:grid-cols-6">
-        {images.map((img, i) => (
+        {cards.map((card, i) => (
           <ScrollReveal
             key={i}
-            className={`group relative cursor-pointer overflow-hidden rounded-[var(--radius)] border border-glass-border bg-glass backdrop-blur-lg transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_24px_48px_rgba(0,0,0,0.3)] ${img.span}`}
-            style={{ minHeight: '200px' }}
+            className={`${card.span}`}
           >
-            <div className={`absolute inset-0 bg-gradient-to-br ${img.gradient} opacity-60 transition-opacity duration-500 group-hover:opacity-80`} />
-            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-transparent" />
-            <div className="relative flex h-full min-h-[200px] flex-col items-center justify-center p-8 text-center">
-              <span className="mb-4 text-5xl transition-transform duration-500 group-hover:scale-110">{img.icon}</span>
-              <h3 className="font-serif text-2xl font-normal text-[#f0ece4] drop-shadow-lg">{img.label}</h3>
-              <p className="mt-2 max-w-xs text-[0.85rem] leading-relaxed text-[rgba(240,236,228,0.7)] drop-shadow">
-                {img.desc}
-              </p>
-              <div className="mt-6">
-                <span className="inline-block rounded-full border border-[rgba(220,38,38,0.4)] px-4 py-1 text-[0.7rem] uppercase tracking-[0.12em] text-red-600 opacity-0 transition-all duration-300 group-hover:opacity-100" style={{ background: 'rgba(220,38,38,0.1)' }}>
-                  Mehr ansehen →
-                </span>
+            {'img' in card ? (
+              <TiltCard
+                className="group relative cursor-pointer overflow-hidden rounded-[calc(var(--radius)+4px)] border border-transparent transition-all duration-500 hover:z-10"
+                style={{
+                  minHeight: '240px',
+                  height: '100%',
+                  boxShadow: '0 0 0 1px rgba(255,255,255,0.06)',
+                  transition: 'box-shadow 0.4s ease',
+                }}
+              >
+                <div
+                  className="absolute inset-0 overflow-hidden rounded-[var(--radius)]"
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget.parentElement;
+                    if (el) {
+                      el.style.boxShadow = `0 0 30px ${card.accent}44, 0 0 60px ${card.accent}22, 0 0 0 1px ${card.accent}66`;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget.parentElement;
+                    if (el) {
+                      el.style.boxShadow = '0 0 0 1px rgba(255,255,255,0.06)';
+                    }
+                  }}
+                >
+                  <img
+                    src={card.img}
+                    alt={card.label}
+                    className="h-full w-full object-cover object-center transition-all duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-90" />
+                  <div className="absolute inset-0 bg-[repeating-linear-gradient(90deg,transparent,transparent_60px,rgba(255,255,255,0.02)_60px,rgba(255,255,255,0.02)_61px)]" />
+                  <div className="absolute bottom-0 left-0 right-0 p-8">
+                    <span className="mb-2 block text-3xl transition-transform duration-500 group-hover:scale-110">📸</span>
+                    <h3 className="font-serif text-2xl font-normal text-white drop-shadow-lg">{card.label}</h3>
+                    <p className="mt-1 max-w-xs text-[0.85rem] leading-relaxed text-white/60">
+                      {card.desc}
+                    </p>
+                    <div className="mt-4 h-px w-0 bg-gradient-to-r from-red-600 to-transparent transition-all duration-500 group-hover:w-full" />
+                  </div>
+                </div>
+              </TiltCard>
+            ) : (
+              <div
+                className="group relative cursor-pointer overflow-hidden rounded-[var(--radius)] border border-glass-border bg-glass backdrop-blur-lg transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_24px_48px_rgba(0,0,0,0.3)]"
+                style={{ minHeight: '240px', height: '100%' }}
+              >
               </div>
-            </div>
+            )}
           </ScrollReveal>
         ))}
       </div>

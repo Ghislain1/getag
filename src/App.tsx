@@ -33,7 +33,7 @@ export default function App() {
       </main>
       <AnnouncementBar
         items={[
-          "📞 +49 (0) 000 000 000",
+          "📞 +49 1525 9269888",
           "✉️ info@gery-salon.de",
           "📍 Mainz & Umgebung",
           "📱 24/7 Terminanfrage",
