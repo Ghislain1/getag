@@ -31,6 +31,17 @@ export default function App() {
         <div className="divider" />
         <Gallery />
       </main>
+      <AnnouncementBar
+        items={[
+          "📞 +49 (0) 000 000 000",
+          "✉️ info@gery-salon.de",
+          "📍 Mainz & Umgebung",
+          "📱 24/7 Terminanfrage",
+          "✂️ Fachgerecht & sauber",
+        ]}
+        speed="30s"
+        position="static"
+      />
       <Footer />
       <FloatingActions />
     </>
