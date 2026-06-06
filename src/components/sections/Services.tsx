@@ -23,6 +23,7 @@ export default function Services() {
         <ScrollReveal className="reveal section-eyebrow !text-white/80 before:!bg-white/80">Unsere Leistungen</ScrollReveal>
         <ScrollReveal className="reveal section-title !text-white">Alles, was Ihre<br /><em className="!text-white">Haare brauchen.</em></ScrollReveal>
         <ScrollReveal className="reveal section-sub !text-white/60">Von der klassischen Pflege bis zur modernen Coloration – präzise, stilbewusst, persönlich.</ScrollReveal>
+        <ScrollReveal className="reveal section-title !text-white/80 before:!bg-white/80">Meine Service fÜr Sie:</ScrollReveal>
       </div>
 
       <div className="mx-auto mb-10 grid max-w-[1200px] grid-cols-1 gap-3 px-[5%] md:grid-cols-2 relative z-[2]">
@@ -43,8 +44,8 @@ export default function Services() {
               🔧
             </div>
             <div>
-              <h4 className="mb-1 font-serif text-xl font-normal text-ink">Optional buchbar: Maschinenreinigung</h4>
-              <p className="text-[0.85rem] leading-[1.6] text-ink-2">Wie neu – wir reinigen und schärfen Ihre Haarschneidemaschine, damit sie wieder präzise schneidet wie am ersten Tag.</p>
+              <h4 className="mb-1 font-serif text-xl font-normal text-white">Optional buchbar: Maschinenreinigung</h4>
+              <p className="text-[0.85rem] leading-[1.6] text-white/60">Wie neu – wir reinigen und schärfen Ihre Haarschneidemaschine, damit sie wieder präzise schneidet wie am ersten Tag.</p>
             </div>
           </div>
         </ScrollReveal>
