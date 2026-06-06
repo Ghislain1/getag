@@ -7,6 +7,7 @@ import About from './components/sections/About';
 import Stats from './components/Stats';
 import Services from './components/sections/Services';
 import Gallery from './components/sections/Gallery';
+import Reviews from './components/sections/Reviews';
 import Footer from './components/layout/Footer';
 import FloatingActions from './components/FloatingActions';
 import { useTheme } from './hooks/useTheme';
@@ -21,6 +22,17 @@ export default function App() {
       <CustomCursor />
       <GradientBg />
       <Navbar isDark={isDark} onToggleTheme={toggle} />
+      <AnnouncementBar
+        items={[
+          "✂️ Schneiden, Föhnen & Styling",
+          "💈 Herrenschnitt ab 25€",
+          "🌈 Balayage & Highlights",
+          "🧴 Haarkur & Pflege",
+        ]}
+        speed="28s"
+        position="static"
+        className="border-b border-glass-border"
+      />
       <main>
         <Hero />
         <EmberParticles />
@@ -30,6 +42,7 @@ export default function App() {
         <Services />
         <div className="divider" />
         <Gallery />
+        <Reviews />
       </main>
       <AnnouncementBar
         items={[
